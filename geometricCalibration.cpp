@@ -26,7 +26,6 @@
 #include "drawing.h"
 #include "log.h"
 #include "qvmTraits.h"
-#include "boost/qvm/vec_operations.hpp"
 #include <fstream>
 #include <iostream>
 using namespace std;

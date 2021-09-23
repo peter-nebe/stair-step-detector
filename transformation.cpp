@@ -20,8 +20,6 @@
 
 #include "transformation.h"
 #include "qvmTraits.h"
-#include "boost/qvm/vec_operations.hpp"
-#include "boost/qvm/vec_mat_operations.hpp"
 #include "boost/qvm/map_mat_vec.hpp"
 #include "boost/qvm/map_mat_mat.hpp"
 #include <tuple>
@@ -189,25 +187,31 @@ Point3 WorldToCamera::operator()(const Point3 &p) const
   return _camera.transformInv(p);
 }
 
-GeometricTransformation::GeometricTransformation(const RefPoints &worldPoints, const RefPoints &cameraPoints)
-: _camera(cameraPoints), // camera coordinates
-  _world({
-           worldPoints[0], // external world coordinates
-           worldPoints[1]
-         },
-         {
-           _cameraToWorld(cameraPoints[0]), // camera-dependent world coordinates
-           _cameraToWorld(cameraPoints[1])
-         }),
-  _worldZ(worldPoints[0].z),
-  _affinity(worldPoints, cameraPoints)
-{
-}
-
-Point3 GeometricTransformation::toExternalWorld(const Point3 &p) const
+Point3 ToExternalWorld::operator()(const Point3 &p) const
 {
   const Point2 p2 = p;
   return{ _world.transform(p2), _worldZ + p.z };
+}
+
+GeometricTransformation::GeometricTransformation(const RefPoints &worldPoints, const RefPoints &cameraPoints)
+: _camera(cameraPoints), // camera coordinates
+  _toExternalWorld{
+                    ._world{
+                             {
+                               worldPoints[0], // external world coordinates
+                               worldPoints[1]
+                             },
+                             {
+                               _cameraToWorld(cameraPoints[0]), // camera-dependent world coordinates
+                               _cameraToWorld(cameraPoints[1])
+                             }
+                           },
+                    ._worldZ{
+                              worldPoints[0].z
+                            }
+                  },
+  _affinity(worldPoints, cameraPoints)
+{
 }
 
 } /* namespace stairs */

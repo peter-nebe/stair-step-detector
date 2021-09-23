@@ -24,6 +24,8 @@
 #include "types.h" // Coordinate_t, Point_
 #include "boost/qvm/mat.hpp"
 #include "boost/qvm/mat_operations.hpp"
+#include "boost/qvm/vec_mat_operations.hpp"
+#include "boost/qvm/vec_operations.hpp"
 
 namespace stairs
 {
@@ -90,6 +92,13 @@ struct WorldToCamera
   const Transformation &_camera;
 };
 
+struct ToExternalWorld
+{
+  Point3 operator()(const Point3 &p) const;
+  const Transformation2D _world;
+  const Coordinate_t _worldZ = 0;
+};
+
 class GeometricTransformation
 {
 public:
@@ -99,7 +108,7 @@ public:
   GeometricTransformation(const RefPoints &worldPoints, const RefPoints &cameraPoints);
   const CameraToWorld &cameraToWorld() const { return _cameraToWorld; }
   const WorldToCamera &worldToCamera() const { return _worldToCamera; }
-  Point3 toExternalWorld(const Point3 &p) const;
+  const ToExternalWorld &toExternalWorld() const { return _toExternalWorld; }
 
 private:
   GeometricTransformation(const GeometricTransformation&) = delete;
@@ -110,8 +119,7 @@ private:
   const WorldToCamera _worldToCamera{ _camera };
 
   // transformation into external world coordinates
-  const Transformation2D _world;
-  const Coordinate_t _worldZ = 0;
+  const ToExternalWorld _toExternalWorld;
 
   // only for debugging and testing
   const Transformation _affinity;

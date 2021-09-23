@@ -26,6 +26,7 @@
 #include "opencv2/highgui.hpp"
 #include "boost/qvm/vec_operations.hpp"
 #include <numbers>
+#include <optional>
 using namespace std;
 using namespace cv;
 

@@ -28,8 +28,6 @@
 #include "stairs.h"
 #include "drawing.h"
 #include "qvmTraits.h"
-#include "boost/qvm/vec_operations.hpp"
-#include "boost/qvm/vec_mat_operations.hpp"
 #include <algorithm>
 #include <span>
 #include <numeric>
@@ -107,41 +105,6 @@ struct ProcessingConfiguration : Configuration
 };
 const ProcessingConfiguration __processingConfiguration;
 
-struct PointsTransformation
-{
-  static Points3_t transformToWorld(const Vertices_t &cameraPoints, const CameraToWorld &cameraToWorld)
-  {
-    Points3_t worldPoints;
-    worldPoints.reserve(cameraPoints.size());
-
-    ranges::transform(cameraPoints, back_inserter(worldPoints), [&cameraToWorld](const rs2::vertex &vertex)
-                                                                {
-                                                                  return cameraToWorld(vertex);
-                                                                });
-    return worldPoints;
-  }
-
-  static Quadrilateral3_t transformToCamera(const Quadrilateral3_t &worldPoints, const WorldToCamera &worldToCamera)
-  {
-    Quadrilateral3_t cameraPoints;
-    ranges::transform(worldPoints, cameraPoints.begin(), [&worldToCamera](const Point3 &point)
-                                                         {
-                                                           return worldToCamera(point);
-                                                         });
-    return cameraPoints;
-  }
-
-  static Quadrilateral3_t transformToExternalWorld(const Quadrilateral3_t &worldPoints, const GeometricTransformation &trans)
-  {
-    Quadrilateral3_t extWorldPoints;
-    ranges::transform(worldPoints, extWorldPoints.begin(), [&trans](const Point3 &point)
-                                                           {
-                                                             return trans.toExternalWorld(point);
-                                                           });
-    return extWorldPoints;
-  }
-}; // struct PointsTransformation
-
 class PointsExtraction
 {
   const rs2::pointcloud &_pointcloud;
@@ -159,7 +122,10 @@ public:
   void extract(Points3_t &points, PointsHt_t &pointsHt) const
   {
     const Vertices_t cameraPoints = getNonZeroPoints();
-    const Points3_t worldPoints = PointsTransformation::transformToWorld(cameraPoints, _cameraToWorld);
+
+    Points3_t worldPoints;
+    worldPoints.reserve(cameraPoints.size());
+    ranges::transform(cameraPoints, back_inserter(worldPoints), _cameraToWorld);
 
     const auto &config = __processingConfiguration;
     points = getPointsInRange(worldPoints, config.measuringRange);
@@ -406,8 +372,9 @@ public:
 
     ranges::transform(stairSteps, back_inserter(stairs.stairSteps), [this](const Quadrilateral3_t &quadri)
                                                                     {
-                                                                      const Quadrilateral3_t extWorld
-                                                                          = PointsTransformation::transformToExternalWorld(quadri, _transformation);
+                                                                      Quadrilateral3_t extWorld;
+                                                                      ranges::transform(quadri, extWorld.begin(), _transformation.toExternalWorld());
+
                                                                       return Stairs::StairStep{ .height = extWorld[0].z,
                                                                                                 .quadrilateral{ extWorld[0],
                                                                                                                 extWorld[1],
@@ -620,7 +587,9 @@ private:
 
   void drawStairStep(const Quadrilateral3_t &quadriWorld, const Quadrilateral_t &labeling, Coordinate_t zLabel) const
   {
-    const Quadrilateral3_t quadriCam = PointsTransformation::transformToCamera(quadriWorld, _transformation.worldToCamera());
+    Quadrilateral3_t quadriCam;
+    ranges::transform(quadriWorld, quadriCam.begin(), _transformation.worldToCamera());
+
     Quadrilateralf_t quadriProj;
     _frame.project(quadriCam, quadriProj);
 
