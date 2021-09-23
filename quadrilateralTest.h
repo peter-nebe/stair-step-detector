@@ -24,6 +24,7 @@
 #include "types.h"
 #include <memory>
 #include <functional>
+#include <limits>
 
 namespace stairs
 {
