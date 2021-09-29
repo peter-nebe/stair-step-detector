@@ -26,7 +26,7 @@ from stairs_msg.msg import Stairs, StairStep
 class Publisher(Node):
   def __init__(self):
     super().__init__('stairs_publisher')
-    self.publisher_ = self.create_publisher(Stairs, 'stairs_topic', 10)
+    self.publisher = self.create_publisher(Stairs, 'stairs_topic', 10)
 
   def run_detector(self):
     proc = subprocess.Popen('./detect-stairs', stdout=subprocess.PIPE, cwd='..')
@@ -38,10 +38,10 @@ class Publisher(Node):
       if ident == 'stairs' and num_stair_steps > 0:
         stair_steps = jdata[2]
         msg = Stairs()
-        for i in range(num_stair_steps):
-          append(stair_steps[i], msg)
+        for step in stair_steps:
+          append(step, msg)
 
-        self.publisher_.publish(msg)
+        self.publisher.publish(msg)
 
 
 def append(stair_step, msg):

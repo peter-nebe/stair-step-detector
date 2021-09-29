@@ -46,7 +46,7 @@ def print_stair_step(top, left, stair_step):
   print_point(top, right, q[3])
   print_point(bottom, left, q[0])
   print_point(bottom, right, q[1])
-  print_parting_line(bottom + 2, left)
+  print_parting_line(bottom+2, left)
 
 def print_parting_line(row, col):
   move(row, col)
