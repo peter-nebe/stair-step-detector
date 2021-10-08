@@ -19,3 +19,4 @@ After calibration, the camera can measure the heights and corner points of the s
 If you are familiar with the [Robot Operating System](https://ros.org), you can use the [simple wrapper](https://github.com/peter-nebe/stair-step-detector/tree/master/ros) for [ROS2 Galactic Geochelone](http://docs.ros.org/en/galactic/Releases/Release-Galactic-Geochelone.html). Among other things, it contains a ROS package with which the measured stair steps can be visualized. The display is done with [RViz](http://wiki.ros.org/rviz), the 3D visualization tool for ROS. Here you can see an example:
 
 ![stairs-visualization](stairs-visualization.png "stairs-visualization")
+See [ROS Wiki](http://wiki.ros.org/stair-step-detector) for more details.
