@@ -20,3 +20,14 @@ If you are familiar with the [Robot Operating System](https://ros.org), you can 
 
 ![stairs-visualization](screenshots/stairs-visualization.png "stairs-visualization")
 See [ROS Wiki](http://wiki.ros.org/stair-step-detector) for more details.
+
+### MDE
+It becomes even more convenient: If you are interested in Model-Driven Engineering (MDE), you can use the [model](https://github.com/peter-nebe/stair-step-detector/tree/master/model) of the stair-step-detector. You can combine this with other ROS components and create an ROS system without programming.
+
+<kbd>
+  <img src="model/example-ros-system.png" />
+</kbd>
+
+*Diagram of an exemplary ROS system*
+
+You can find the tools you need here: https://github.com/ipa320/ros-model
