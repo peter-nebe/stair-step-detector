@@ -1,0 +1,7 @@
+PackageSet { 
+  AmentPackage example_subscriber { 
+    Artifact example_subscriber { Node { name example_subscriber 
+      Subscribers {
+        Subscriber { name stairs_sub message "stairs_msg.Stairs" }
+      }
+}}}}

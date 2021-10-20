@@ -1,0 +1,10 @@
+PackageSet { 
+  AmentPackage stairs_visualizer { 
+    Artifact stairs_visualizer { Node { name stairs_visualizer 
+      Publishers { 
+        Publisher { name visualization_pub message "visualization_msgs.Marker" }
+      }
+      Subscribers {
+        Subscriber { name stairs_sub message "stairs_msg.Stairs" }
+      }
+}}}}

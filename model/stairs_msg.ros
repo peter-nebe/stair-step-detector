@@ -1,0 +1,7 @@
+PackageSet{
+  Package stairs_msg{ Specs { 
+    TopicSpec Point2{ message { float64 x float64 y }},
+    TopicSpec StairStep{ message { float64 height Point2[] quadrilateral }},
+    TopicSpec Stairs{ message { StairStep[] stair_steps }}
+  }}
+}

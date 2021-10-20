@@ -1,0 +1,7 @@
+PackageSet { 
+  AmentPackage stair_step_detector { 
+    Artifact stair_step_detector { Node { name stair_step_detector 
+      Publishers { 
+        Publisher { name stairs_pub message "stairs_msg.Stairs" }
+      }
+}}}}

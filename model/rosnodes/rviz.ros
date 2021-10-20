@@ -1,0 +1,7 @@
+PackageSet { 
+  AmentPackage rviz { 
+    Artifact rviz { Node { name rviz 
+      Subscribers {
+        Subscriber { name visualization_sub message "visualization_msgs.Marker" }
+      }
+}}}}

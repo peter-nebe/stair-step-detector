@@ -1,0 +1,21 @@
+RosSystem { Name 'example' 
+RosComponents ( 
+  ComponentInterface { name stair_step_detector FromRosNode "stair_step_detector.stair_step_detector.stair_step_detector" 
+    RosPublishers { RosPublisher stairs_pub { RefPublisher "stair_step_detector.stair_step_detector.stair_step_detector.stairs_pub" } }
+  } , 
+  ComponentInterface { name example_subscriber FromRosNode "example_subscriber.example_subscriber.example_subscriber" 
+    RosSubscribers { RosSubscriber stairs_sub { RefSubscriber "example_subscriber.example_subscriber.example_subscriber.stairs_sub" } }
+  } , 
+  ComponentInterface { name stairs_visualizer FromRosNode "stairs_visualizer.stairs_visualizer.stairs_visualizer" 
+    RosPublishers { RosPublisher visualization_pub { RefPublisher "stairs_visualizer.stairs_visualizer.stairs_visualizer.visualization_pub" } } 
+    RosSubscribers { RosSubscriber stairs_sub { RefSubscriber "stairs_visualizer.stairs_visualizer.stairs_visualizer.stairs_sub" } }
+  } , 
+  ComponentInterface { name rviz FromRosNode "rviz.rviz.rviz" 
+    RosSubscribers { RosSubscriber visualization_sub { RefSubscriber "rviz.rviz.rviz.visualization_sub" } }
+  }
+) 
+TopicConnections { 
+  TopicConnection stairs_topic { From ( "stair_step_detector.stairs_pub" ) To ( "example_subscriber.stairs_sub" ) } , 
+  TopicConnection stairs_topic { From ( "stair_step_detector.stairs_pub" ) To ( "stairs_visualizer.stairs_sub" ) } , 
+  TopicConnection stairs_visualizer { From ( "stairs_visualizer.visualization_pub" ) To ( "rviz.visualization_sub" ) }
+}}
