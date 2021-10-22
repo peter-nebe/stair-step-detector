@@ -22,7 +22,7 @@ If you are familiar with the [Robot Operating System](https://ros.org), you can 
 See [ROS Wiki](http://wiki.ros.org/stair-step-detector) for more details.
 
 ### MDE
-It becomes even more convenient: If you are interested in Model-Driven Engineering (MDE), you can use the [model](https://github.com/peter-nebe/stair-step-detector/tree/master/model) of the stair-step-detector. You can combine this with other ROS components and create an ROS system without programming.
+It becomes even more convenient: If you are interested in Model-Driven Engineering (MDE), you can use the [model](https://github.com/peter-nebe/stair-step-detector/tree/master/model) of the stair-step-detector. You can combine this with other ROS components and create an ROS system without manual coding. The code generation is done by sophisticated and advanced tools.
 
 <kbd>
   <img src="model/example-ros-system.png" />
