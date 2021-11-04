@@ -15,7 +15,14 @@ The camera is calibrated with the help of three points in the ground plane.
 ![stair-step-detector](screenshots/stair-step-detector.jpg "stair-step-detector")
 After calibration, the camera can measure the heights and corner points of the stair steps that are in the measurement area. External world coordinates are displayed on the left.
 
-#### Integration with ROS
+Exact knowledge of the position of the individual steps can help a mobile robot to negotiate a flight of stairs, if in principle it is able to do so. For a robot, ascending and descending stairs may be different challenges. But there is only one position and line of sight for the camera to fully capture a step. If the camera is attached to the robot, it must always be brought into the correct measuring position using suitable mechanics. In principle it could look like this:
+
+![ascending stairs](screenshots/ascending.png "ascending stairs")
+![descending stairs](screenshots/descending.png "descending stairs")
+
+If the robot is clever, it ensures that the image is not upside down by rotating the camera 180 degrees around the optical axis. If it doesn't, the image has to be rotated (or mirrored) using software. Then the algorithm of the **stair-step-detector** can be used for both ascending and descending stairs.
+
+### Integration with ROS
 If you are familiar with the [Robot Operating System](https://ros.org), you can use the [simple wrapper](https://github.com/peter-nebe/stair-step-detector/tree/master/ros) for [ROS2 Galactic Geochelone](http://docs.ros.org/en/galactic/Releases/Release-Galactic-Geochelone.html). Among other things, it contains a ROS package with which the measured stair steps can be visualized. The display is done with [RViz](http://wiki.ros.org/rviz), the 3D visualization tool for ROS. Here you can see an example:
 
 ![stairs-visualization](screenshots/stairs-visualization.png "stairs-visualization")
