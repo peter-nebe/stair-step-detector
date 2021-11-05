@@ -27,7 +27,7 @@ The **stair-step-detector** currently uses the Intel® RealSense™ LiDAR Camera
 - An infrared image and the associated depth image are taken for the geometric calibration.
 - The calibration marks are localized in the infrared image, and the 3D coordinates are determined for these 2D positions.
 - In measurement mode, the SDK delivers [point clouds](https://github.com/peter-nebe/stair-step-detector/blob/master/pointcloud.cpp#L138) in distortion-free Cartesian coordinates.
-- For the sake of simplicity, the SDK sample window is used for the [application window](https://github.com/peter-nebe/stair-step-detector/blob/master/window.h#L38).
+- For the sake of simplicity, the window class from the SDK examples is used for the [application window](https://github.com/peter-nebe/stair-step-detector/blob/master/window.h#L38).
 
 The adaptation effort would be greatest when using two conventional cameras as a stereo pair, but thanks to OpenCV that is also possible in principle.
 
