@@ -10,7 +10,7 @@ Detection of stair steps using a LiDAR depth camera
 
 ### Overview
 ![calibration](screenshots/calibration.jpg "calibration")
-The camera is calibrated with the help of three points in the ground plane.
+The camera is calibrated with the help of three points in the ground plane. There is more information about calibration [here](https://github.com/peter-nebe/stair-step-detector/blob/master/CALIBRATION.md).
 
 ![stair-step-detector](screenshots/stair-step-detector.jpg "stair-step-detector")
 After calibration, the camera can measure the heights and corner points of the stair steps that are in the measurement area. External world coordinates are displayed on the left.
